@@ -1,0 +1,33 @@
+package main
+
+import (
+    . "fmt"
+    "runtime"
+    "time"
+)
+
+var i int = 0
+
+func thread1() {
+    for j := 0; j < 1000000; j++ {
+		i += 1
+	}
+	Println(i)
+}
+
+func thread2() {
+    for j := 0; j < 1000000; j++ {
+		i -= 1
+	}
+	Println(i)
+}
+
+func main() {
+    runtime.GOMAXPROCS(runtime.NumCPU())    
+    go thread1() 
+	go thread2()
+	
+    // We'll come back to using channels in Exercise 2. For now: Sleep.
+    time.Sleep(100*time.Millisecond)
+    Println(i)
+}
